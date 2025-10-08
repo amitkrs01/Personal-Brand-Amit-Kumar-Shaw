@@ -6,12 +6,13 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ name }) => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const navItems = ["about", "skills", "experience", "ventures", "education", "certifications", "honors"];
+    const navItems = ["about", "skills", "experience", "portfolio", "ventures", "education", "certifications", "honors"];
     
     const navLabels: { [key: string]: string } = {
         about: "About",
         skills: "Skills",
         experience: "Experience",
+        portfolio: "Portfolio",
         ventures: "Ventures",
         education: "Education",
         certifications: "Certifications",
@@ -32,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ name }) => {
 
     return (
         <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-sm shadow-md' : 'bg-transparent'}`}>
-            <nav className="container mx-auto max-w-5xl px-6 py-4">
+            <nav className="container mx-auto max-w-7xl px-6 py-4">
                 <div className="flex justify-between items-center">
                     <a href="#hero" onClick={(e) => { e.preventDefault(); scrollToSection('hero'); }} className="text-2xl font-bold text-black hover:text-gray-700 transition-colors">
                         {name.split(' ').map(n => n[0]).join('')}

@@ -308,6 +308,11 @@ export const resumeData: ResumeData = {
   ],
   ventures: [
       {
+          name: "AV Product Management",
+          role: "Founder & Principal Product Consultant (January 2025 - Present)",
+          description: "Leading a product consultancy focused on providing strategic guidance and hands-on support to technology companies. Helping clients define product vision, build effective roadmaps, and implement growth strategies to scale their ventures."
+      },
+      {
           name: "Sky High & Co.",
           role: "Founder (June 2015 - July 2017)",
           description: "Launched an education-focused youth venture to promote confidence, creativity, and collaboration. Built and led a 30+ member team for district-scale events and partnered with schools to provide opportunities for under-resourced students."
@@ -328,5 +333,203 @@ export const resumeData: ResumeData = {
     { name: "English", proficiency: "Native or Bilingual" },
     { name: "Hindi", proficiency: "Native or Bilingual" }
   ],
-  portfolio: []
+  portfolio: [
+    {
+      title: "Health & Wellness Platform (B2C SaaS)",
+      products: [
+        {
+          name: "Native App – iOS and Android",
+          features: [
+            "3000+ Content Library on AWS",
+            "Chatbot 2.0 – GPT 4 Based",
+            "Live & Past Event Recordings",
+            "Expert Guidance & Group Meditation",
+            "Group Chat & Gamification (Leaderboard, Treasure Hunt)",
+            "Health Measurements and Wearables Integration",
+            "AI-driven Personalization (10 Aspirations on Home Page, content refresh)",
+            "40+ Wellness Programs/Plans",
+            "Parallel Intentions, Mood Check-In, and Gratitude Journaling",
+            "Shake-to-inspire Affirmations",
+            "User Stats Tracking (Total sessions, Longest streak)",
+          ]
+        },
+        {
+          name: "CHRO Portal (B2B)",
+          features: [
+            "Live reporting dashboard for CHROs",
+            "Real-time license management for corporate users",
+            {
+              name: "Role-Based Access Control",
+              details: ["3 roles (Root, Org, User) to handle all complexities"]
+            },
+            "Organization and user management",
+            "Order management for license adjustments and budget control",
+            "Data reporting on content metrics and gratitude journal to help reduce absenteeism",
+          ]
+        },
+        {
+            name: "Web Touchpoints & GTM",
+            features: [
+                "Innergy 2.0 Web Platform Launch",
+                "Creation of sales enablement assets (Brochures, Sales Decks, etc.)",
+                "Feature mapping and highlighting of wearables and new features"
+            ]
+        }
+      ]
+    },
+    {
+      title: "B2B FinTech & Lending SaaS",
+      products: [
+        {
+          name: "Supply Chain Finance - SaaS Product (0 to 1)",
+          features: [
+            "Built LMS (Loan Management System) and LOS (Loan Origination System) from scratch",
+            {
+              name: "Rapidly deployed 6 full-fledged modules in 3 months",
+              details: [
+                "Asset digitisation and verification service",
+                "Manual and Automated disbursement requests & flows",
+                "Manual and Automated repayments flows",
+                "E-Collect with manual and escrow reading capabilities",
+                "Asset Level Settlements",
+              ],
+            },
+            "No-code workflow management to create custom loan workflows in minutes",
+            "Agent queue and workspace",
+            "Rule Engine for Entities, Actions, Conditions, and Tasks",
+            {
+              name: "Prototyped 13 core system components",
+              details: [
+                "LOS Integration", "Collections", "Cash Applications", "Agreements & TnCs", "User Authentication", "Document Signing", "Fees & Charges", "Reporting & Analytics", "Risk & Portfolio Management", "Communications/Notifications", "Debt Restructuring", "Accounting Entry Generation",
+              ]
+            }
+          ]
+        },
+        {
+          name: "Invoice Discounting - Flagship Product",
+          features: [
+            "Developed Borrower and Investor Flows for the entire Supply Chain Finance vertical",
+            {
+                name: "Implemented crucial flows",
+                details: [
+                    "Compliance checks as per DLG guidelines",
+                    "NACH implementation",
+                    "BGV automation",
+                    "Onboarding automation",
+                ]
+            }
+          ]
+        },
+        {
+          name: "Muhurat 2023 - B2C Gamification",
+          features: [
+            "Cashback, Coupons, and Scratch cards",
+            "Live leaderboard and gaming experience with investment trackers and nudges",
+            "Real-time competitiveness metrics for investors"
+          ]
+        },
+        {
+          name: "Integrated Cross-Sell Product",
+          features: [
+            {
+              name: "Linked Accounts Payable to Financing, enabling cross-selling and upselling",
+              details: [
+                "Accounts Payable with Invoice Discounting",
+                "Accounts Receivable with Invoice Discounting",
+                "Accounts Payable with Global Trade",
+                "Accounts Receivable with Global Trade"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+        title: "AI-Powered Conversation Intelligence (B2B SaaS)",
+        products: [
+          {
+            name: "0 to 1 Products",
+            features: [
+              {
+                name: "Scorecards & Coaching",
+                details: ["Template-based scoring for sales reps", "Coaching dashboard to track progress with charts and graphs"]
+              },
+              {
+                name: "Scheduler",
+                details: ["Group Scheduling similar to Calendly and Cal.com"]
+              },
+              {
+                name: "AI-Powered Auto Scoring",
+                details: ["Automated call scoring to save manager time", "Phrase detection to auto-score calls against pre-defined templates"]
+              },
+              "Multi-Language Transcription Support",
+              {
+                name: "Slack Integration",
+                details: ["Real-time Slack alerts for Meeting and Playlist updates", "Real-time syncing of comments and collaboration"]
+              }
+            ]
+          },
+          {
+            name: "1 to 10 Products",
+            features: [
+              "Playlist Experiences",
+              {
+                  name: "Snippets",
+                  details: ["Start and End time definition", "YouTube-like play bar"]
+              },
+              {
+                  name: "Meeting Collaboration",
+                  details: ["10-second skip controls", "Transcription and Snippet merging"]
+              },
+              {
+                  name: "Scorecards Commenting",
+                  details: ["Enhanced collaboration between reps and leaders"]
+              }
+            ]
+          }
+        ]
+    },
+    {
+        title: "Enterprise Contract & Risk Management (B2B SaaS)",
+        products: [
+            {
+                name: "Obligations Management",
+                features: [
+                    "Delivered business application from concept to launch",
+                    "Core framework based on NLP for keyword analysis",
+                    "Utilized DiscoverAI & ML to find actionable obligations in unlimited-page contracts",
+                    "High-speed contract processing (30 seconds/500 pages)",
+                    "Full workflow for discovery obligation & fulfillment cycles"
+                ]
+            },
+            {
+                name: "Risk Management",
+                features: [
+                    "Owned application after the 1st release, delivering 7+ subsequent releases",
+                    "Covers the entire lifecycle of risks associated with contracts",
+                    "Questionnaire feature to analyze and quantify risk metrics",
+                    "Designed for customization across multiple enterprises"
+                ]
+            }
+        ]
+    },
+    {
+        title: "Diversified B2B SaaS Solutions",
+        products: [
+            {
+                name: "Product & Development Experiences",
+                features: [
+                    "Defense solution for the US Govt.",
+                    "Verticalization for the entire IT Industry",
+                    "KYC Application for a major engineering tech giant",
+                    "Ride-hailing (Ola/Uber-like) application prototypes",
+                    "Predictive analytics tool to forecast sales demand for a major retailer",
+                    "Multiple advisory tech products (including customization on CRM & SAP)",
+                    "Front-end website & app development",
+                    "Experienced in app mock-ups and hypothesis testing"
+                ]
+            }
+        ]
+    }
+]
 };

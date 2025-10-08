@@ -9,7 +9,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ personalInfo, onEmailClick }) => {
   return (
     <footer id="contact" className="bg-black text-white py-10">
-      <div className="container mx-auto max-w-5xl px-6 text-center">
+      <div className="container mx-auto max-w-7xl px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Let's Connect</h2>
         <p className="text-gray-400 mb-6 max-w-md mx-auto">
           I'm open to new opportunities and collaborations. Feel free to reach out.
