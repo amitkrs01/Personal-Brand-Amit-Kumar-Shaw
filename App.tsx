@@ -46,7 +46,7 @@ const App: React.FC = () => {
         
         <Section title="About Me" id="about">
           <p className="text-gray-600 leading-relaxed text-lg">{summary}</p>
-        </section>
+        </Section>
 
         <Section title="Top Skills" id="skills">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-lg">
@@ -57,7 +57,7 @@ const App: React.FC = () => {
                 </div>
               ))}
           </div>
-        </section>
+        </Section>
 
         <Section title="Experience" id="experience">
           <div className="space-y-12">
@@ -65,7 +65,7 @@ const App: React.FC = () => {
               <ExperienceItem key={index} experience={exp} />
             ))}
           </div>
-        </section>
+        </Section>
 
         <Section title="Ventures" id="ventures">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -73,7 +73,7 @@ const App: React.FC = () => {
               <VentureItem key={index} venture={venture} />
             ))}
           </div>
-        </section>
+        </Section>
         
         <Section title="Education" id="education">
           <div className="space-y-8">
@@ -81,19 +81,19 @@ const App: React.FC = () => {
               <EducationItem key={index} education={edu} />
             ))}
           </div>
-        </section>
+        </Section>
 
         <Section title="Certifications" id="certifications">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {certifications.map((cert, index) => <CertificationItem key={index} certification={cert} />)}
             </div>
-        </section>
+        </Section>
 
          <Section title="Honors & Awards" id="honors">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {honorsAwards.map((award, index) => <HonorAwardItem key={index} award={award} />)}
             </div>
-        </section>
+        </Section>
 
       </main>
       
