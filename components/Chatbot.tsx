@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI, Chat, GenerateContentResponse, Type } from "@google/genai";
+import { GoogleGenAI, GenerateContentResponse, Type, Content } from "@google/genai";
 import { resumeData } from '../constants';
 
 interface ChatbotProps {
@@ -43,7 +43,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
   const [isError, setIsError] = useState(false);
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const chatRef = useRef<Chat | null>(null);
+  const [history, setHistory] = useState<Content[]>([]);
   const aiRef = useRef<GoogleGenAI | null>(null);
 
   const scrollToBottom = () => {
@@ -89,39 +89,43 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
     
     setIsError(false);
     setSuggestedQuestions([]);
-    const newMessages = [...messages, { text: messageText, isUser: true }];
-    setMessages(newMessages);
+    setMessages(prev => [...prev, { text: messageText, isUser: true }]);
     setInput('');
     setIsLoading(true);
 
     try {
-      let currentChat = chatRef.current;
-      
-      if (!currentChat) {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        aiRef.current = ai;
-        
-        const fullResumeText = JSON.stringify(resumeData);
-        const systemInstruction = `You are a friendly and professional AI assistant for Amit Kumar Shaw's personal portfolio. Your goal is to answer questions about Amit based ONLY on the provided resume data. Do not invent any information. If the answer is not in the data, say that you don't have that information. Keep your answers concise and helpful. Use markdown for formatting, like **bold** for emphasis.`;
-        
-        const history = [
-          { role: 'user' as const, parts: [{ text: `Here is the resume data for Amit Kumar Shaw: ${fullResumeText}` }] },
-          { role: 'model' as const, parts: [{ text: "Understood. I have Amit's resume data and will answer questions based on it." }] }
-        ];
-
-        currentChat = ai.chats.create({
-          model: 'gemini-2.5-flash',
-          history,
-          config: {
-            systemInstruction,
-          },
-        });
-        chatRef.current = currentChat;
+      if (!aiRef.current) {
+        aiRef.current = new GoogleGenAI({ apiKey: process.env.API_KEY });
       }
       
-      const response: GenerateContentResponse = await currentChat.sendMessage({ message: messageText });
+      const ai = aiRef.current;
+
+      const fullResumeText = JSON.stringify(resumeData);
+      const systemInstruction = `You are a friendly and professional AI assistant for Amit Kumar Shaw's personal portfolio. Your goal is to answer questions about Amit based ONLY on the provided resume data. Do not invent any information. If the answer is not in the data, say that you don't have that information. Keep your answers concise and helpful. Use markdown for formatting, like **bold** for emphasis.`;
+      
+      const chatHistoryForAPI: Content[] = history.length > 0 ? history : [
+          { role: 'user', parts: [{ text: `Here is the resume data for Amit Kumar Shaw: ${fullResumeText}` }] },
+          { role: 'model', parts: [{ text: "Understood. I have Amit's resume data and will answer questions based on it." }] }
+      ];
+      
+      const userMessageContent: Content = { role: 'user', parts: [{ text: messageText }] };
+      const contents = [...chatHistoryForAPI, userMessageContent];
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: contents,
+        config: {
+          systemInstruction,
+        },
+      });
+
       const aiText = response.text;
+      
       setMessages(prev => [...prev, { text: aiText, isUser: false }]);
+      
+      const aiMessageContent: Content = { role: 'model', parts: [{ text: aiText }] };
+      setHistory([...contents, aiMessageContent]);
+
       await generateFollowUpQuestions(messageText, aiText);
 
     } catch (error) {
@@ -190,9 +194,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask a question..."
                 className="w-full bg-white border-2 border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all"
-                disabled={isLoading || isError}
+                disabled={isLoading}
               />
-              <button type="submit" disabled={isLoading || !input.trim() || isError} className="bg-black text-white rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center hover:bg-gray-800 disabled:bg-gray-400 transition-colors">
+              <button type="submit" disabled={isLoading || !input.trim()} className="bg-black text-white rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center hover:bg-gray-800 disabled:bg-gray-400 transition-colors">
                 <i className="fas fa-paper-plane"></i>
               </button>
             </div>
