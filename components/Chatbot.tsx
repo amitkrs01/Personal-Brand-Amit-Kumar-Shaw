@@ -87,6 +87,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
   const handleSendMessage = async (messageText: string) => {
     if (!messageText.trim() || isLoading) return;
     
+    setIsError(false);
     setSuggestedQuestions([]);
     const newMessages = [...messages, { text: messageText, isUser: true }];
     setMessages(newMessages);
@@ -99,13 +100,20 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
       if (!currentChat) {
         const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
         aiRef.current = ai;
+        
         const fullResumeText = JSON.stringify(resumeData);
-        const systemInstruction = `You are a friendly and professional AI assistant for Amit Kumar Shaw's personal portfolio. Your goal is to answer questions about Amit based ONLY on the provided resume data. Do not invent any information. If the answer is not in the data, say that you don't have that information. Keep your answers concise and helpful. Use markdown for formatting, like **bold** for emphasis. Here is the resume data: ${fullResumeText}`;
+        const systemInstruction = `You are a friendly and professional AI assistant for Amit Kumar Shaw's personal portfolio. Your goal is to answer questions about Amit based ONLY on the provided resume data. Do not invent any information. If the answer is not in the data, say that you don't have that information. Keep your answers concise and helpful. Use markdown for formatting, like **bold** for emphasis.`;
+        
+        const history = [
+          { role: 'user' as const, parts: [{ text: `Here is the resume data for Amit Kumar Shaw: ${fullResumeText}` }] },
+          { role: 'model' as const, parts: [{ text: "Understood. I have Amit's resume data and will answer questions based on it." }] }
+        ];
 
         currentChat = ai.chats.create({
           model: 'gemini-2.5-flash',
+          history,
           config: {
-            systemInstruction: systemInstruction,
+            systemInstruction,
           },
         });
         chatRef.current = currentChat;
