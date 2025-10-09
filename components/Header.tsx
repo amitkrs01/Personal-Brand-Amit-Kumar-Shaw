@@ -6,6 +6,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ name }) => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navItems = ["about", "skills", "experience", "portfolio", "ventures", "education", "certifications", "honors"];
     
     const navLabels: { [key: string]: string } = {
@@ -27,29 +28,78 @@ const Header: React.FC<HeaderProps> = ({ name }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isMenuOpen]);
+
     const scrollToSection = (id: string) => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     };
+    
+    const handleMobileLinkClick = (id: string) => {
+        scrollToSection(id);
+        setIsMenuOpen(false);
+    };
 
     return (
-        <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-sm shadow-md' : 'bg-transparent'}`}>
-            <nav className="container mx-auto max-w-7xl px-6 py-4">
-                <div className="flex justify-between items-center">
-                    <a href="#hero" onClick={(e) => { e.preventDefault(); scrollToSection('hero'); }} className="text-2xl font-bold text-black hover:text-gray-700 transition-colors">
-                        {name.split(' ').map(n => n[0]).join('')}
-                    </a>
-                    <ul className="hidden sm:flex space-x-8">
-                        {navItems.map(item => (
-                            <li key={item}>
-                                <a href={`#${item}`} onClick={(e) => { e.preventDefault(); scrollToSection(item); }} className="text-lg text-gray-600 hover:text-black transition-colors font-medium">
-                                    {navLabels[item] || item}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </nav>
-        </header>
+        <>
+            <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-white/90 backdrop-blur-sm shadow-md' : 'bg-transparent'}`}>
+                <nav className="container mx-auto max-w-7xl px-6 py-4">
+                    <div className="flex justify-between items-center">
+                        <a href="#hero" onClick={(e) => { e.preventDefault(); scrollToSection('hero'); }} className="text-2xl font-bold text-black hover:text-gray-700 transition-colors">
+                            {name.split(' ').map(n => n[0]).join('')}
+                        </a>
+                        
+                        {/* Desktop Navigation */}
+                        <ul className="hidden sm:flex space-x-8">
+                            {navItems.map(item => (
+                                <li key={item}>
+                                    <a href={`#${item}`} onClick={(e) => { e.preventDefault(); scrollToSection(item); }} className="text-lg text-gray-600 hover:text-black transition-colors font-medium">
+                                        {navLabels[item] || item}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+
+                        {/* Mobile Menu Button */}
+                        <button 
+                          onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                          className="sm:hidden text-2xl text-black"
+                          aria-label="Toggle menu"
+                          aria-expanded={isMenuOpen}
+                        >
+                          <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                        </button>
+                    </div>
+                </nav>
+            </header>
+
+            {/* Mobile Menu Overlay */}
+            {isMenuOpen && (
+              <div className="fixed inset-0 bg-white flex flex-col items-center justify-center sm:hidden animate-fade-in-down z-40">
+                <ul className="flex flex-col items-center space-y-8">
+                  {navItems.map(item => (
+                    <li key={item}>
+                      <a 
+                        href={`#${item}`} 
+                        onClick={(e) => { e.preventDefault(); handleMobileLinkClick(item); }} 
+                        className="text-3xl text-black hover:text-gray-700 transition-colors font-semibold"
+                      >
+                        {navLabels[item] || item}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+        </>
     );
 };
 

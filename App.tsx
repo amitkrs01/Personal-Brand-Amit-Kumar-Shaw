@@ -54,7 +54,7 @@ const App: React.FC = () => {
         
         <div id="about" className="py-10 sm:py-16 grid md:grid-cols-3 gap-8 md:gap-16 items-start">
           <div className="md:col-span-1">
-             <h2 className="text-3xl font-bold text-black border-l-4 border-black pl-4 sticky top-24">About Me</h2>
+             <h2 className="text-3xl font-bold text-black border-l-4 border-black pl-4 md:sticky md:top-24">About Me</h2>
           </div>
           <div className="md:col-span-2">
              <p className="text-gray-600 leading-relaxed text-lg">{summary}</p>
@@ -63,7 +63,7 @@ const App: React.FC = () => {
 
         <div id="skills" className="py-10 sm:py-16 grid md:grid-cols-3 gap-8 md:gap-16 items-start">
             <div className="md:col-span-1">
-                <h2 className="text-3xl font-bold text-black border-l-4 border-black pl-4 sticky top-24">Top Skills</h2>
+                <h2 className="text-3xl font-bold text-black border-l-4 border-black pl-4 md:sticky md:top-24">Top Skills</h2>
             </div>
             <div className="md:col-span-2">
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-lg">
