@@ -46,30 +46,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
   const chatRef = useRef<Chat | null>(null);
   const aiRef = useRef<GoogleGenAI | null>(null);
 
-  useEffect(() => {
-    const initializeChat = () => {
-      try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        aiRef.current = ai;
-        const fullResumeText = JSON.stringify(resumeData);
-        const systemInstruction = `You are a friendly and professional AI assistant for Amit Kumar Shaw's personal portfolio. Your goal is to answer questions about Amit based ONLY on the provided resume data. Do not invent any information. If the answer is not in the data, say that you don't have that information. Keep your answers concise and helpful. Use markdown for formatting, like **bold** for emphasis. Here is the resume data: ${fullResumeText}`;
-
-        chatRef.current = ai.chats.create({
-          model: 'gemini-2.5-flash',
-          config: {
-            systemInstruction: systemInstruction,
-          },
-        });
-      } catch (error) {
-        console.error("Error initializing Gemini Chat:", error);
-        setMessages(prev => [...prev, { text: "Sorry, I'm having trouble initializing the chat. Please try again later.", isUser: false }]);
-        setIsError(true);
-      }
-    };
-    initializeChat();
-  }, []);
-
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -109,7 +85,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
   };
 
   const handleSendMessage = async (messageText: string) => {
-    if (!messageText.trim() || isLoading || !chatRef.current) return;
+    if (!messageText.trim() || isLoading) return;
     
     setSuggestedQuestions([]);
     const newMessages = [...messages, { text: messageText, isUser: true }];
@@ -118,7 +94,24 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
     setIsLoading(true);
 
     try {
-      const response: GenerateContentResponse = await chatRef.current.sendMessage({ message: messageText });
+      let currentChat = chatRef.current;
+      
+      if (!currentChat) {
+        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        aiRef.current = ai;
+        const fullResumeText = JSON.stringify(resumeData);
+        const systemInstruction = `You are a friendly and professional AI assistant for Amit Kumar Shaw's personal portfolio. Your goal is to answer questions about Amit based ONLY on the provided resume data. Do not invent any information. If the answer is not in the data, say that you don't have that information. Keep your answers concise and helpful. Use markdown for formatting, like **bold** for emphasis. Here is the resume data: ${fullResumeText}`;
+
+        currentChat = ai.chats.create({
+          model: 'gemini-2.5-flash',
+          config: {
+            systemInstruction: systemInstruction,
+          },
+        });
+        chatRef.current = currentChat;
+      }
+      
+      const response: GenerateContentResponse = await currentChat.sendMessage({ message: messageText });
       const aiText = response.text;
       setMessages(prev => [...prev, { text: aiText, isUser: false }]);
       await generateFollowUpQuestions(messageText, aiText);
@@ -126,6 +119,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ onClose }) => {
     } catch (error) {
       console.error("Error calling Gemini API:", error);
       setMessages(prev => [...prev, { text: "Sorry, I'm having trouble connecting. Please try again later.", isUser: false }]);
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
