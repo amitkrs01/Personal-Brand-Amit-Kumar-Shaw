@@ -11,12 +11,14 @@ import CertificationItem from './components/CertificationItem';
 import ContactForm from './components/ContactForm';
 import Toast from './components/Toast';
 import PortfolioItem from './components/PortfolioItem';
+import Chatbot from './components/Chatbot';
 
 const App: React.FC = () => {
   const { personalInfo, summary, topSkills, experience, education, honorsAwards, ventures, certifications, portfolio } = resumeData;
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const handleFormSubmit = (success: boolean) => {
     setIsFormOpen(false);
@@ -126,6 +128,15 @@ const App: React.FC = () => {
       {isFormOpen && <ContactForm onClose={() => setIsFormOpen(false)} onFormSubmit={handleFormSubmit} />}
       {showToast && <Toast message={toastMessage} onClose={() => setShowToast(false)} />}
       
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-8 right-8 bg-black text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center text-3xl hover:bg-gray-800 transition-transform duration-300 z-40 transform hover:scale-110"
+        aria-label="Chat with AI assistant"
+      >
+        <i className="fas fa-robot"></i>
+      </button>
+
+      {isChatOpen && <Chatbot onClose={() => setIsChatOpen(false)} />}
     </div>
   );
 };
