@@ -50,10 +50,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ onClose, onFormSubmit }) => {
       });
 
       const result = await response.json();
-      if (result.result === 'success') {
+      console.log('Google Apps Script response:', result);
+
+      if (result.status === 'success') {
         onFormSubmit(true);
       } else {
-        console.error('Form submission error:', result.error);
+        console.error('Form submission error:', result.message || result.error);
         onFormSubmit(false);
       }
     } catch (error) {
