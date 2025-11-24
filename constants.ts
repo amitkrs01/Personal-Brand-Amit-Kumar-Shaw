@@ -8,7 +8,7 @@ export const resumeData: ResumeData = {
     phone: "+91-9883132444",
     email: "amitkumarshaw22@gmail.com",
     linkedin: "www.linkedin.com/in/amit-kumar-shaw",
-    googleScriptWebAppUrl: "https://script.google.com/macros/s/AKfycbwbcoTybMV04eTWTmzIuxm7iAcj8CgC7VItRR0Y1PA2cCTcVim7u0ZcqaBf9Y5Fjhyn/exec",
+    googleScriptWebAppUrl: "https://script.google.com/macros/s/AKfycbxpvfWdPJSkEcuCA1-pRnkO53V721nahIpfXSYKTkC4kFQETRX-3o0Z9u5SBNrKmPKP/exec",
   },
   summary: "Seasoned Product and Growth leader with over a decade of cross-functional experience across fintech, SaaS, AI platforms, and consulting. I help technology ventures transform ideas into scalable products and successful go-to-market strategies. This includes building from 0 to 1, scaling across markets, and optimizing mature platforms for performance and growth. My work spans high-growth startups, enterprise ecosystems, and social-impact ventures. I have led product strategy, platform expansion, and operational transformation, specializing in data-driven decision making, user-centric design, and cross-functional leadership. I bring a builder's mindset, a strategist's perspective, and a strong focus on execution that delivers measurable business outcomes and lasting user value.",
   topSkills: [
