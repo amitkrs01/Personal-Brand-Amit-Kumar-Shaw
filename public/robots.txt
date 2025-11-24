@@ -1,0 +1,13 @@
+# robots.txt for amitkumarshaw.com
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://amitkumarshaw.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 0
+
+# Disallow specific paths (if any)
+# Disallow: /private/
+
